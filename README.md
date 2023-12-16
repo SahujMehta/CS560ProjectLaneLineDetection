@@ -2,7 +2,7 @@
 ### Sahuj Mehta
 ---
 ## Abstract
-&emsp; Lane line detection is a pivotal component in the development of autonomous vehicles, serving as a a path planning tool to enable lateral controls. The task itself is difficult in comparison to autnomous longitudinal controls which have been around since 1999 in the form of daptive cruise control. This project was undertaken on behalf of UA's EcoCAR team focusing specifically on evaluating sensors and implementing lane centering for a 2023 Cadillac Lyriq. Considering the computational constraints of the team added hardware and the budghe, the project evaluates the feasibility of utilizing front facing cameras and LiDAR sensors for the task. The study also investigates a hybrid approach in which the two are both cameras and LiDARs are used. The analysis was conducted using MATLAB, Simulink, CARLA, and ROS. MATLAB and Simulink were used for the car's logic, CARLA to simulate the car, and ROS served as the bridge between them. There performance was evaluated using MATLAB performance profiler along with simulation results. The ultimate conclusion of the project was that unless there is a specific other need for a LiDAR, using a camera would be the most efficent method in terms of both cost and also computational complexity.
+&emsp; Lane line detection is a pivotal component in the development of autonomous vehicles, serving as a a path planning tool to enable lateral controls. The task itself is difficult in comparison to autonomous longitudinal controls which have been around since 1999 in the form of adaptive cruise control. This project was undertaken on behalf of UA's EcoCAR team focusing specifically on evaluating sensors and implementing lane centering for a 2023 Cadillac Lyriq. Considering the computational constraints of the team added hardware and the budget, the project evaluates the feasibility of utilizing front facing cameras and LiDAR sensors for the task. The study also investigates a hybrid approach in which the two are both cameras and LiDARs are used. The analysis was conducted using MATLAB, Simulink, CARLA, and ROS. MATLAB and Simulink were used for the car's logic, CARLA to simulate the car, and ROS served as the bridge between them. There performance was evaluated using MATLAB performance profiler along with simulation results. The ultimate conclusion of the project was that unless there is a specific other need for a LiDAR, using a camera would be the most efficient method in terms of both cost and also computational complexity.
 
 ## Introduction
 &emsp;One of the most pressing challenges faced in the journey to self-driving cars, is lane detection. While identifying roads is a trivial task for humans, it is a far more difficult task for autonomous vehicles. The goal of lane line detection is primarily to serve as a path planning tool as well as a safety tool for lateral control systems in autonomous vehicles. There are many obstacles that must be overcome when implementing such a system, including the different road line types, edges without lines, different road materials, lighting conditions, and environmental hazards. Implementing a system that takes into account these factors is crucial, so that a high enough safety threshold can be achieved to make the system a viable product. 
@@ -20,7 +20,7 @@
 #### Development and Validation of ADAS Perception Application in ROS Environment Integrated with CARLA Simulator:
 &emsp; This paper focused on the development of LiDAR based ADAS (Advanced Driver Assistance Systems) using ROS and CARLA. ROS is a suite of tools for developing and robotics applications. In this context, the use of ROS is used for sensor data manipulation and for the actual controls of the vehicle. CARLA is an open source simulation tool for vehicles. It provides high fidelity simulation and has a bridge to ROS that can be used for a two-way stream of data. This paper was used as it provides valuable information for the architecture of this project and guidance on tools that can be used to approach the task. This paper however doesn't focus much on the actual algorithms and focuses on broader ADAS systems than lane line detection for lateral controls.
 https://ieeexplore.ieee.org/document/8971063
-#### Lane detection and tracking via Matlab:
+#### Lane detection and tracking via MATLAB:
 &emsp; This paper addresses algorithms for the use of camera data to detect lane lines. This paper uses MATLAB with complex filtering techniques to distill images into a format that can be parsed for lane line data. The control flow for this paper was using MATLAB for all the processing and then an interfacing layer for ROS to and using the ROS toolbox to get outputs in Gazebo. The actual algorithm is the edge detection from the image for lane lines, and then there is a secondary component of path planning and controls. The parts of this paper that will be used are the use of MATLAB with an intermediary layer before the simulator. This will be done due to the wide array of image and data processing tools available in MATLAB along with its various visualization methods. The actual image detection algorithm will also be partially utilized, specifically the use of RANSAC (Random Sample Consensus) along with the parameters chosen on the images to help find lane lines.
 https://pure.tue.nl/ws/portalfiles/portal/297651227/1438581_BEP.pdf
 #### Real time object detection using LiDAR and camera fusion for autonomous driving
@@ -37,7 +37,7 @@ The approach is based on the following steps:
 graph
 A[MATLAB Data Processing Algorithm]
 A --> C[MATLAB Lateral Controls MPC]
-C --> D[Matlab ROS Toolbox]
+C --> D[MATLAB ROS Toolbox]
 D -- Controls-->B[ROS Interfacing Layer]
 
 E(Simulation in Carla)--Updated Position-->C
@@ -57,7 +57,7 @@ III) Install VMware Workstation 17 Player (https://www.vmware.com/go/getplayer-w
 
 IV) Install Mathworks Noetic VM (https://www.mathworks.com/support/product/robotics/ros2-vm-installation-instructions-v9.html)
 
-V) Install Matlab R2023B, Simulink, ROS Toolbox, Automated Driving Toolbox, Image Processing Toolbox, Computer Vision Toolbox (https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&s_tid=gn_getml)
+V) Install MATLAB R2023B, Simulink, ROS Toolbox, Automated Driving Toolbox, Image Processing Toolbox, Computer Vision Toolbox (https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&s_tid=gn_getml)
 
 VI) Download this repository
 
@@ -89,24 +89,24 @@ This is some documentation for a camera based lane line detection algorithm in M
 Here is documentation for another lane detection algorithm that was utilized: https://towardsdatascience.com/computer-vision-for-lane-finding-24ea77f25209
 
 4. **LiDAR based detection**
-The LiDAR approach is limited in scope. The first step is to get a point cloud from the sensor on the Car. Then the noise is filtered out using a spatial filter. The data is then projected onto an XY plane before being turned into a binary image. The hough transform is once again used to identify the lane lines in the image. With the basic lane lines detected, they are sent to the trajectory function to calculate a predicted trajectory based on the lines. The trajectory is then outputted as a steering angle to the MPC to control the steering of the car.
+The LiDAR approach is limited in scope. The first step is to get a point cloud from the sensor on the Car. Then the noise is filtered out using a spatial filter. The data is then projected onto an XY plane before being turned into a binary image. The Hough transform is once again used to identify the lane lines in the image. With the basic lane lines detected, they are sent to the trajectory function to calculate a predicted trajectory based on the lines. The trajectory is then outputted as a steering angle to the MPC to control the steering of the car.
 
 This is some documentation for the LiDAR based approach:
 https://www.mathworks.com/help/lidar/ug/lane-detection-in-3d-lidar-point-cloud.html
 
 5. **Hybrid based detection**
-While initially it was intended to be a complex approach to the problem using machine learning to calculate lane lines based on the data to create a joint trajectory of a probablistic nature, due to the time constraints this was not implemented. In the spirit of the project, where the goal was simply to identify the good and bad aspects of each algorithm, a shift was made to create a hybrid algorithm that simply used both individual algorithms and then merged and smoothed the trajectories to get a heading. While it was intially intended to be a high complexity difficult algorithn, the new approach serves as a better indicator of the strengths and weaknesses of the approach as a whole and less of a look at one very specific hybrid approach.
-This is some documentation of the hybrid approach that was intially intended:
+While initially it was intended to be a complex approach to the problem using machine learning to calculate lane lines based on the data to create a joint trajectory of a probabilistic nature, due to the time constraints this was not implemented. In the spirit of the project, where the goal was simply to identify the good and bad aspects of each algorithm, a shift was made to create a hybrid algorithm that simply used both individual algorithms and then merged and smoothed the trajectories to get a heading. While it was initially intended to be a high complexity difficult algorithm, the new approach serves as a better indicator of the strengths and weaknesses of the approach as a whole and less of a look at one very specific hybrid approach.
+This is some documentation of the hybrid approach that was initially intended:
 http://rvsn.csail.mit.edu/Pubs/phd_ashuang_2010feb_laneestimation.pdf
 
 6. **Tests**
-Tests were simply done using MATLAB code profiler to identify the speeds of each process. Then trajectories were graphed over laid on a straight line since the vehicle didn't end up getting tested on curves. The deviation in the straightline testing was graphed along side the straight line trajectory to compare the approaches.
+Tests were simply done using MATLAB code profiler to identify the speeds of each process. Then trajectories were graphed over laid on a straight line since the vehicle didn't end up getting tested on curves. The deviation in the straight-line testing was graphed along side the straight line trajectory to compare the approaches.
 Here is documentation for simulink testing in MATLAB:
 https://www.mathworks.com/help/sltest/test-execution.html
 Here is the documentation for the code profiler in MATLAB:
 https://www.mathworks.com/help/matlab/matlab_prog/profiling-for-improving-performance.html
 
-Here is the image of the simulink model I made for this project. The user can select the detection mechanism using constant and change other parameters as neccessary.
+Here is the image of the simulink model I made for this project. The user can select the detection mechanism using constant and change other parameters as necessary.
 ![MicrosoftTeams-image (1)](https://github.com/SahujMehta/CS560ProjectLaneLineDetection/assets/51139362/8014ff51-d42e-46bc-a166-7b9e984f9f42)
 
 
@@ -130,7 +130,7 @@ Here is a picture of the data from the simulated controls algorithm. Since these
 
 
 ## Conclusion
-&emsp; The assessment of the various technologies used for lane line tracking proved to be an interesting yet very difficult venture. The project ended up being very time consuming and troublesome to debug even though MATLAB had alot of functions to make the programming easier. While the initial intention was to test the algorithms on curved roads, there wasn't enough time and the straight line results were interesting on their own. The evidence suggests that while LiDAR may have enhanced performance, it is hindered by the increased computational load and is limited by the intensity filtering of lane lines to get data. The front facing camera approach was not nearly as good at detecting the lane lines, but was more consistent throughout and required significantly less computational overhead. The hybrid method was difficult to implement, and there are likely several different ways it could be improved, but this study suggested that the additional strain of the algorithm lead to limited improved performance over the other two algorithms. Taking into consideration the cost both in terms of monetary amount and also system resources, the front facing camera is the clear winner since it performed well enough to be actually used while also being substantially less expensive than the alternatives. Unless there is an alternative use for LiDAR in the car, it is not worthwhile to add the complexity to the simulation. The one advantage of LiDAR over front facing cameras is distance detection, although that can be accomplished with stereo cameras. Next steps include evaluating other hybrid approaches since the one implemented was quite rudimentary and could definitley be improved substantially.
+&emsp; The assessment of the various technologies used for lane line tracking proved to be an interesting yet very difficult venture. The project ended up being very time consuming and troublesome to debug even though MATLAB had a lot of functions to make the programming easier. While the initial intention was to test the algorithms on curved roads, there wasn't enough time and the straight line results were interesting on their own. The evidence suggests that while LiDAR may have enhanced performance, it is hindered by the increased computational load and is limited by the intensity filtering of lane lines to get data. The front facing camera approach was not nearly as good at detecting the lane lines, but was more consistent throughout and required significantly less computational overhead. The hybrid method was difficult to implement, and there are likely several different ways it could be improved, but this study suggested that the additional strain of the algorithm lead to limited improved performance over the other two algorithms. Taking into consideration the cost both in terms of monetary amount and also system resources, the front facing camera is the clear winner since it performed well enough to be actually used while also being substantially less expensive than the alternatives. Unless there is an alternative use for LiDAR in the car, it is not worthwhile to add the complexity to the simulation. The one advantage of LiDAR over front facing cameras is distance detection, although that can be accomplished with stereo cameras. Next steps include evaluating other hybrid approaches since the one implemented was quite rudimentary and could definitely be improved substantially.
 
 ## Link to presentation video
 Here is the link to my class presentation: https://youtu.be/qLRK5g5MH9o
