@@ -51,7 +51,7 @@ In order to replicate the setup, follow these steps:
 
 I) Note this will only work on Windows since CARLA isn't supported for Mac OS
 
-II) Install CARLA 9.13 along with the additional maps(https://carla.org/2021/11/16/release-0.9.13/)
+II) Install CARLA 9.13 (https://carla.org/2021/11/16/release-0.9.13/) The world file is included in Carla (Town 3)
 
 III) Install VMware Workstation 17 Player (https://www.vmware.com/go/getplayer-win)
 
