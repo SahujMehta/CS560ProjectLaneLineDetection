@@ -106,6 +106,10 @@ https://www.mathworks.com/help/sltest/test-execution.html
 Here is the documentation for the code profiler in MATLAB:
 https://www.mathworks.com/help/matlab/matlab_prog/profiling-for-improving-performance.html
 
+Here is the image of the simulink model I made for this project. The user can select the detection mechanism using constant and change other parameters as neccessary.
+![MicrosoftTeams-image (1)](https://github.com/SahujMehta/CS560ProjectLaneLineDetection/assets/51139362/8014ff51-d42e-46bc-a166-7b9e984f9f42)
+
+
 ## Assumptions
 &emsp; Several assumptions were made for this project. First, there was an assumption that longitudinal controls were fixed. Dealing with longitudinal controls on top of lateral controls would introduce another set of variables and a great deal more complexity, so for the scope of this project, only the lateral controls were focused on. The second assumption was that the lateral controls are processed by an MPC that is fed a path from the algorithms that were being tested. The goal of this was also to reduce complexity since the team already has a very basic implementation of a lateral controls MPC that could be used. The next assumption was that lane lines are white or yellow with no obstructions and they are on both sides of the road even on an edge. The purpose of this was to ensure that the algorithms themselves were being isolated to be tested. This also lead to the assumption that the road would be perfectly flat. The goal of this was to assess the capabilities of the algorithms not the simulated vehicle. The final assumption was equidistant lines to ensure that there is a true most optimal path based on the center of the lane for the purpose of ensuring that there is a good benchmark to follow.
 
